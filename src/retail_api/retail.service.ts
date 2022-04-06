@@ -38,25 +38,50 @@ export class RetailService {
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
-    const orders = plainToClass(Order, resp.data.orders as Array<any>)
+    const orders: Order[] = plainToClass(Order, resp.data.orders as Array<any>)
     const pagination: RetailPagination = resp.data.pagination
 
     return [orders, pagination]
   }
 
   async findOrder(id: string): Promise<Order | null> {
+    const params = serialize(id, '')
+    const resp = await this.axios.get('/findOrder?' + params)
 
+    if (!resp.data) throw new Error('RETAIL CRM ERROR')
+
+    const order: Order = plainToClass(Order, resp.data.order)
+
+    return order
   }
 
   async orderStatuses(): Promise<CrmType[]> {
+    const resp = await this.axios.get('/orderStatuses')
 
+    if (!resp.data) throw new Error('RETAIL CRM ERROR')
+
+    const orderStatuses: CrmType[] = plainToClass(CrmType, resp.data.orders as Array<any>)
+
+    return orderStatuses
   }
 
   async productStatuses(): Promise<CrmType[]> {
+    const resp = await this.axios.get('/productStatuses')
 
+    if (!resp.data) throw new Error('RETAIL CRM ERROR')
+
+    const productStatuses: CrmType[] = plainToClass(CrmType, resp.data.orders as Array<any>)
+
+    return productStatuses
   }
 
   async deliveryTypes(): Promise<CrmType[]> {
+    const resp = await this.axios.get('/deliveryTypes')
 
+    if (!resp.data) throw new Error('RETAIL CRM ERROR')
+
+    const deliveryTypes: CrmType[] = plainToClass(CrmType, resp.data.orders as Array<any>)
+
+    return deliveryTypes
   }
 }
