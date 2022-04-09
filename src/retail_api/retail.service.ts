@@ -4,16 +4,18 @@ import axios, { AxiosInstance } from 'axios'
 import { ConcurrencyManager } from 'axios-concurrency'
 import { serialize } from '../tools'
 import { plainToClass } from 'class-transformer'
+require('dotenv').config()
 
 @Injectable()
 export class RetailService {
   private readonly axios: AxiosInstance
-
   constructor() {
     this.axios = axios.create({
       baseURL: `${process.env.RETAIL_URL}/api/v5`,
       timeout: 10000,
-      headers: { },
+      headers: {
+        'x-api-key': process.env.RETAIL_KEY
+      },
     })
 
     this.axios.interceptors.request.use((config) => {
@@ -46,7 +48,7 @@ export class RetailService {
 
   async findOrder(id: string): Promise<Order | null> {
     const params = serialize(id, '')
-    const resp = await this.axios.get('/findOrder?' + params)
+    const resp = await this.axios.get('/orders/externalId?' + params)
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
