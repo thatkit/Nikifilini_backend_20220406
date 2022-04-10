@@ -12,6 +12,7 @@ export const serialize = (obj, prefix) => {
       )
     }
   }
+  console.log('p:', p)
 
   return str.join('&')
 }

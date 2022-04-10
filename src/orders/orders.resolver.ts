@@ -9,14 +9,15 @@ export class OrdersResolver {
 
   @Query()
   async getOrders(@Args('page') filter?: OrdersFilter) {
-    console.log('"getOrders" query fired')
-    return this.retailService.orders(filter)
+    const arr = await this.retailService.orders(filter)
+    return {
+      orders: arr[0],
+      pagination: arr[1]
+    }
   }
 
   @Query()
   async order(@Args('number') id: string) {
-    // console.log('"order" query fired')
-    // console.log(id)
     return this.retailService.findOrder(id)
   }
 }

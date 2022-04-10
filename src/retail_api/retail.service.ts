@@ -35,8 +35,7 @@ export class RetailService {
   }
 
   async orders(filter?: OrdersFilter): Promise<[Order[], RetailPagination]> {
-    const params = serialize(filter, '')
-    const resp = await this.axios.get('/orders?' + params)
+    const resp = await this.axios.get('/orders?page=' + filter)
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
