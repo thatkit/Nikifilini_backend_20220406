@@ -19,7 +19,7 @@ export class RetailService {
     })
 
     this.axios.interceptors.request.use((config) => {
-      // console.log(config.url)
+      console.log(config.url)
       return config
     })
     this.axios.interceptors.response.use(
@@ -47,8 +47,7 @@ export class RetailService {
   }
 
   async findOrder(id: string): Promise<Order | null> {
-    const params = serialize(id, '')
-    const resp = await this.axios.get('/orders/externalId?' + params)
+    const resp = await this.axios.get('/orders/' + id + '?site=demo-magazin')
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
