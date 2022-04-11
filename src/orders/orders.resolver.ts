@@ -20,4 +20,9 @@ export class OrdersResolver {
   async order(@Args('number') id: string) {
     return this.retailService.findOrder(id)
   }
+
+  @Query()
+  async orderStatuses() {
+    return this.retailService.orderStatuses()
+  }
 }

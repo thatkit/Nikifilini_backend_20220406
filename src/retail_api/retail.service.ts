@@ -4,6 +4,7 @@ import axios, { AxiosInstance } from 'axios'
 import { ConcurrencyManager } from 'axios-concurrency'
 import { serialize } from '../tools'
 import { plainToClass } from 'class-transformer'
+import { OrderStatus } from 'src/graphql'
 require('dotenv').config()
 
 @Injectable()
@@ -28,7 +29,7 @@ export class RetailService {
         return r
       },
       (r) => {
-        // console.log("Error:", r.response.data)
+        console.log("Error:", r.response.data)
         return r
       },
     )
@@ -56,11 +57,11 @@ export class RetailService {
   }
 
   async orderStatuses(): Promise<CrmType[]> {
-    const resp = await this.axios.get('/orderStatuses')
+    const resp = await this.axios.get('/orders/statuses?externalIds[]=null')
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
-    const orderStatuses: CrmType[] = plainToClass(CrmType, resp.data.orders as Array<any>)
+    const orderStatuses: CrmType[] = resp.data.orders
 
     return orderStatuses
   }
