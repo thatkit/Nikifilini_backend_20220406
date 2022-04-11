@@ -1,10 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { CrmType, Order, OrdersFilter, RetailPagination } from './types'
 import axios, { AxiosInstance } from 'axios'
-import { ConcurrencyManager } from 'axios-concurrency'
-import { serialize } from '../tools'
-import { classToPlain, plainToClass } from 'class-transformer'
-import { OrderStatus } from 'src/graphql'
+// import { ConcurrencyManager } from 'axios-concurrency'
+// import { serialize } from '../tools'
+import { plainToClass } from 'class-transformer'
 require('dotenv').config()
 
 @Injectable()
@@ -20,7 +19,7 @@ export class RetailService {
     })
 
     this.axios.interceptors.request.use((config) => {
-      console.log(config.url)
+      // console.log(config.url)
       return config
     })
     this.axios.interceptors.response.use(
