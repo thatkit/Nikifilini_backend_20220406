@@ -30,4 +30,9 @@ export class OrdersResolver {
   async productStatuses() {
     return this.retailService.productStatuses()
   }
+
+  @Query()
+  async deliveryTypes() {
+    return this.retailService.deliveryTypes()
+  }
 }

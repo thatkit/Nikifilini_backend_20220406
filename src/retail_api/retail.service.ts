@@ -77,11 +77,11 @@ export class RetailService {
   }
 
   async deliveryTypes(): Promise<CrmType[]> {
-    const resp = await this.axios.get('/deliveryTypes')
+    const resp = await this.axios.get('/reference/delivery-types')
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
-    const deliveryTypes: CrmType[] = plainToClass(CrmType, resp.data.orders as Array<any>)
+    const deliveryTypes: CrmType[] = Object.values(resp.data.deliveryTypes)
 
     return deliveryTypes
   }
