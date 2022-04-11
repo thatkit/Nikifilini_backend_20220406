@@ -3,7 +3,7 @@ import { CrmType, Order, OrdersFilter, RetailPagination } from './types'
 import axios, { AxiosInstance } from 'axios'
 import { ConcurrencyManager } from 'axios-concurrency'
 import { serialize } from '../tools'
-import { plainToClass } from 'class-transformer'
+import { classToPlain, plainToClass } from 'class-transformer'
 import { OrderStatus } from 'src/graphql'
 require('dotenv').config()
 
@@ -29,7 +29,7 @@ export class RetailService {
         return r
       },
       (r) => {
-        console.log("Error:", r.response.data)
+        // console.log("Error:", r.response.data)
         return r
       },
     )
@@ -67,11 +67,11 @@ export class RetailService {
   }
 
   async productStatuses(): Promise<CrmType[]> {
-    const resp = await this.axios.get('/productStatuses')
+    const resp = await this.axios.get('/reference/product-statuses')
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
-    const productStatuses: CrmType[] = plainToClass(CrmType, resp.data.orders as Array<any>)
+    const productStatuses: CrmType[] = Object.values(resp.data.productStatuses)
 
     return productStatuses
   }
