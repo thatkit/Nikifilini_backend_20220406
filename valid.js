@@ -1,4 +1,4 @@
-{
+module.exports = {
     "slug": 53,
     "bonusesCreditTotal": 0,
     "bonusesChargeTotal": 0,

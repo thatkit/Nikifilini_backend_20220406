@@ -47,6 +47,7 @@ export class RetailService {
 
   async findOrder(id: string): Promise<Order | null> {
     const resp = await this.axios.get('/orders/' + id + '?site=demo-magazin')
+    // # modify to {{retailUrl}}/api/v5/orders/{{invalidId}}?site=demo-magazin&by=id
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
