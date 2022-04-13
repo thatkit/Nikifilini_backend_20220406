@@ -19,7 +19,7 @@ export class RetailService {
     })
 
     this.axios.interceptors.request.use((config) => {
-      // console.log(config.url)
+      console.log(config.url)
       return config
     })
     this.axios.interceptors.response.use(
