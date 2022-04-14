@@ -1,8 +1,6 @@
 import { Injectable } from '@nestjs/common'
 import { CrmType, Order, OrdersFilter, RetailPagination } from './types'
 import axios, { AxiosInstance } from 'axios'
-// import { ConcurrencyManager } from 'axios-concurrency'
-// import { serialize } from '../tools'
 import { plainToClass } from 'class-transformer'
 require('dotenv').config()
 
@@ -19,7 +17,7 @@ export class RetailService {
     })
 
     this.axios.interceptors.request.use((config) => {
-      console.log(config.url)
+      // console.log(config.url)
       return config
     })
     this.axios.interceptors.response.use(
@@ -41,7 +39,6 @@ export class RetailService {
 
     const orders: Order[] = plainToClass(Order, resp.data.orders as Array<any>)
     const pagination: RetailPagination = resp.data.pagination
-
     return [orders, pagination]
   }
 
@@ -51,17 +48,15 @@ export class RetailService {
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
     const order: Order = plainToClass(Order, resp.data.order)
-
     return order
   }
 
   async orderStatuses(): Promise<CrmType[]> {
-    const resp = await this.axios.get('/orders/statuses?externalIds[]=null')
+    const resp = await this.axios.get('/reference/statuses')
 
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
-    const orderStatuses: CrmType[] = resp.data.orders
-
+    const orderStatuses: CrmType[] = Object.values(resp.data.statuses)
     return orderStatuses
   }
 
@@ -71,7 +66,6 @@ export class RetailService {
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
     const productStatuses: CrmType[] = Object.values(resp.data.productStatuses)
-
     return productStatuses
   }
 
@@ -81,7 +75,6 @@ export class RetailService {
     if (!resp.data) throw new Error('RETAIL CRM ERROR')
 
     const deliveryTypes: CrmType[] = Object.values(resp.data.deliveryTypes)
-
     return deliveryTypes
   }
 }
